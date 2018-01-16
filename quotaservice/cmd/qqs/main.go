@@ -153,6 +153,7 @@ func main() {
 					} else if err != nil {
 						LogError(err)
 					}
+
 				}
 
 				// if resp.Status != pb.AllowResponse_OK {
