@@ -1,0 +1,44 @@
+.change {
+  padding: 5px;
+
+  .change-text {
+    .fa {
+      vertical-align: middle;
+      font-size: 8px;
+      margin-right: 2px;
+    }
+  }
+}
+
+.changes {
+  background-color: white;
+  border: $border-grey;
+  max-height: 50%;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.past {
+  background-color: rgba(113, 166, 210, 0.4);
+  font-weight: bold;
+}
+
+.future {
+  color: rgba(180, 180, 180, 1.0);
+  font-style: italic;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  > div {
+    margin-bottom: 10px;
+  }
+
+  .save-refresh {
+    margin-left: auto;
+  }
+}
+

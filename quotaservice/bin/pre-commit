@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Licensed under the Apache License, Version 2.0
+# Details: https://raw.githubusercontent.com/square/quotaservice/master/LICENSE
+
+files=`git diff-index HEAD | cut -f 5 -d ' ' | cut -f 2`
+
+CYAN="\033[0;36m"
+GREEN="\033[0;32m"
+RED="\033[0;31m"
+PURPLE="\033[0;35m"
+BLUE="\033[0;34m"
+NO_COLOUR="\033[0m"
+
+echo "${PURPLE}Inspecting your commit.${NO_COLOUR}"
+
+runtests=""
+
+for f in $files ; do
+  if [[ $f == *".go" ]] ; then
+    runtests="true"
+  fi  
+done
+
+if [ $runtests ] ; then
+  go vet $(go list ./... | grep -v /vendor/)
+  if [ $? -ne 0 ] ; then
+    echo
+    echo "${RED}Refusing to commit.${NO_COLOUR}"
+    exit 1
+  else
+	  go test -v $(go list ./... | grep -v /vendor/) > /tmp/qstests.out 2>&1
+    if [ $? -ne 0 ] ; then
+      cat /tmp/qstests.out | perl -pe 's/--- /\n/' | grep -e '^FAIL'
+      echo
+      echo "${RED}Refusing to commit.${NO_COLOUR}"
+      exit 1
+    fi
+  fi
+fi
+
+echo "${GREEN}Committing....${NO_COLOUR}"
