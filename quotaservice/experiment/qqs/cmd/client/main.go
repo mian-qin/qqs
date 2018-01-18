@@ -9,10 +9,8 @@ import (
 	"sync"
 	"time"
 
-	qsclient "github.com/square/quotaservice/client"
+	"github.com/square/quotaservice/experiment/qqs"
 	"github.com/square/quotaservice/experiment/qqs/util"
-	pb "github.com/square/quotaservice/protos"
-	"google.golang.org/grpc"
 
 	flags "github.com/jessevdk/go-flags"
 )
@@ -24,11 +22,7 @@ type Options struct {
 	QueryInterval int    `short:"i" long:"query-interval" description:"query interval in milliseconds between two queries" default:"100"`
 	Blocking      int    `short:"b" long:"blocking" description:"use blocking quota queries" default:"1"`
 	Projects      int    `short:"p" long:"projects" description:"number of projects for testing" default:"1"`
-}
-
-func setUpClient(addr string) (*qsclient.Client, error) {
-	client, err := qsclient.New(addr, grpc.WithInsecure())
-	return client, err
+	Timeout       int64  `short:"t" long:"timeout" description:"request timeout in ms" default:"1000"`
 }
 
 func main() {
@@ -38,13 +32,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	client, err := setUpClient(o.ServerAddr)
-	if err != nil {
-		qqs.LogError(err)
-	}
-
+	// Catch interrupt
 	ctx, cancel := context.WithCancel(context.Background())
-
 	cc := make(chan os.Signal, 1)
 	signal.Notify(cc, os.Interrupt)
 
@@ -53,6 +42,12 @@ func main() {
 			cancel()
 		}
 	}()
+
+	client, err := qqs.NewClient(ctx, o.ServerAddr)
+	if err != nil {
+		qqsutil.LogError(err)
+		return
+	}
 
 	var wg sync.WaitGroup
 	for p := 1; p <= o.Projects; p++ {
@@ -65,35 +60,24 @@ func main() {
 					return
 				case <-after:
 					t := rand.Int63n(int64(o.Cap)) + 1
-					req := &pb.AllowRequest{
-						Namespace:       "project",
-						BucketName:      strconv.FormatInt(int64(p), 10),
-						TokensRequested: t,
-						// MaxWaitTimeOverride:   true,
-						MaxWaitMillisOverride: 20 * 1000,
+					rctx, rcancel := context.WithTimeout(ctx, time.Duration(o.Timeout)*time.Millisecond)
+					defer rcancel()
+
+					qqsutil.Log("#%d requesting %d token(s) for project %d\n", i, t, p)
+					gr, wait, err := client.Allow(rctx,
+						o.Blocking == 1,
+						"project",
+						strconv.FormatInt(int64(p), 10),
+						t,
+						20*1000,
+					)
+
+					if err != nil {
+						qqsutil.LogError(err)
+						continue
 					}
 
-					qqs.Log("#%d requesting %d tokens for project %d\n", i, t, p)
-					if o.Blocking == 1 {
-						err := client.AllowBlocking(req)
-						if err != nil {
-							qqs.LogError(err)
-						} else {
-							qqs.Log("#%d is approved\n", i)
-						}
-					} else {
-						resp, err := client.Allow(req)
-						qqs.Log("#%d: %d tokens granted for project: %d. Need to wait for %d ms.\n", i, resp.TokensGranted, p, resp.WaitMillis)
-						if resp.WaitMillis == 0 && resp.TokensGranted == t && err == nil {
-							qqs.Log("#%d is approved\n", i)
-						} else if err != nil {
-							qqs.LogError(err)
-						}
-					}
-					// if resp.Status != pb.AllowResponse_OK {
-					// 	qqs.LogError(fmt.Errorf("Response not OK. %v", pb.AllowResponse_Status_name[int32(resp.Status)]))
-					// }
-
+					qqsutil.Log("#%d: %d tokens granted for project: %d. Need to wait for %d ms.\n", i, gr, p, wait)
 					if i < o.QueryCount-1 {
 						after = time.After(time.Duration(o.QueryInterval) * time.Millisecond)
 					}
@@ -105,5 +89,5 @@ func main() {
 	}
 
 	wg.Wait()
-	qqs.Log("Client closed")
+	qqsutil.Log("Client closed")
 }

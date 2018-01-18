@@ -1,4 +1,4 @@
-package qqs
+package qqsutil
 
 import (
 	"fmt"
