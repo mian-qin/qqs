@@ -110,8 +110,13 @@ func AskForQuota(ctx context.Context, cl *QQClient, cap int64, blocking bool, na
 	select {
 	case r := <-result:
 		if r.Error == nil {
-			qqsutil.Log("#%s: %d tokens granted for project: %s. Need to wait for %d ms.\n", name, r.Granted, p, r.WaitMs)
+			if r.Granted == 0 && r.WaitMs == 0 {
+				r.Error = fmt.Errorf("No quota available for project %s", p)
+			} else {
+				qqsutil.Log("#%s: %d tokens granted for project: %s. Need to wait for %d ms.\n", name, r.Granted, p, r.WaitMs)
+			}
 		}
+
 		return r
 	case <-after:
 		return AskResult{

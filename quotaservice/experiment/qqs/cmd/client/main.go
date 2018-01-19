@@ -15,7 +15,7 @@ import (
 )
 
 type Options struct {
-	Cap           int    `short:"m" long:"max" description:"max quota per project" default:"5"`
+	Cap           int    `short:"m" long:"max" description:"max quota per request" default:"1"`
 	ServerAddr    string `short:"a" long:"server-address" description:"server address" default:"localhost:10990"`
 	QueryCount    int    `short:"n" long:"query-count" description:"query count for testing" default:"1"`
 	QueryInterval int    `short:"i" long:"query-interval" description:"query interval in milliseconds between two queries" default:"100"`
