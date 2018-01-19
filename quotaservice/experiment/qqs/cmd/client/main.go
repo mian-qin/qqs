@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"math/rand"
 	"os"
 	"os/signal"
 	"strconv"
@@ -49,6 +48,7 @@ func main() {
 		return
 	}
 
+	timeout := time.Duration(o.Timeout) * time.Millisecond
 	var wg sync.WaitGroup
 	for p := 1; p <= o.Projects; p++ {
 		wg.Add(1)
@@ -59,25 +59,17 @@ func main() {
 				case <-ctx.Done():
 					return
 				case <-after:
-					t := rand.Int63n(int64(o.Cap)) + 1
-					rctx, rcancel := context.WithTimeout(ctx, time.Duration(o.Timeout)*time.Millisecond)
-					defer rcancel()
-
-					qqsutil.Log("#%d requesting %d token(s) for project %d\n", i, t, p)
-					gr, wait, err := client.Allow(rctx,
+					r := qqs.AskForQuota(ctx,
+						client,
+						int64(o.Cap),
 						o.Blocking == 1,
-						"project",
+						strconv.FormatInt(int64(i), 10),
 						strconv.FormatInt(int64(p), 10),
-						t,
-						20*1000,
+						timeout,
 					)
-
-					if err != nil {
-						qqsutil.LogError(err)
-						continue
+					if r.Error != nil {
+						qqsutil.LogError(r.Error)
 					}
-
-					qqsutil.Log("#%d: %d tokens granted for project: %d. Need to wait for %d ms.\n", i, gr, p, wait)
 					if i < o.QueryCount-1 {
 						after = time.After(time.Duration(o.QueryInterval) * time.Millisecond)
 					}

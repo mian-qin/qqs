@@ -3,8 +3,11 @@ package qqs
 import (
 	"context"
 	"fmt"
+	"math/rand"
+	"time"
 
 	qsclient "github.com/square/quotaservice/client"
+	"github.com/square/quotaservice/experiment/qqs/util"
 	pb "github.com/square/quotaservice/protos"
 	"google.golang.org/grpc"
 )
@@ -53,7 +56,7 @@ func (qc *QQClient) Allow(ctx context.Context, blocking bool, ns, bucket string,
 
 	select {
 	case <-ctx.Done():
-		return 0, 0, fmt.Errorf("Context cancelled")
+		return 0, 0, fmt.Errorf("Context cancelled before quota query starts")
 	default:
 		if blocking {
 			err := qc.cl.AllowBlockingWithContext(ctx, req)
@@ -70,5 +73,49 @@ func (qc *QQClient) Allow(ctx context.Context, blocking bool, ns, bucket string,
 		}
 
 		return resp.TokensGranted, resp.WaitMillis, nil
+	}
+}
+
+type AskResult struct {
+	Granted int64
+	WaitMs  int64
+	Error   error
+}
+
+// AskForQuota sends quota query request with client timeout
+func AskForQuota(ctx context.Context, cl *QQClient, cap int64, blocking bool, name, p string, to time.Duration) AskResult {
+	rctx, rcancel := context.WithTimeout(ctx, to)
+	defer rcancel()
+
+	t := rand.Int63n(cap) + 1
+	qqsutil.Log("#%s requesting %d token(s) for project %s\n", name, t, p)
+	result := make(chan AskResult)
+	after := time.After(to)
+	go func() {
+		gr, wait, err := cl.Allow(rctx,
+			blocking,
+			"project",
+			p,
+			t,
+			20*1000,
+		)
+
+		result <- AskResult{
+			Granted: gr,
+			WaitMs:  wait,
+			Error:   err,
+		}
+	}()
+
+	select {
+	case r := <-result:
+		if r.Error == nil {
+			qqsutil.Log("#%s: %d tokens granted for project: %s. Need to wait for %d ms.\n", name, r.Granted, p, r.WaitMs)
+		}
+		return r
+	case <-after:
+		return AskResult{
+			Error: fmt.Errorf("Quota query call timed out"),
+		}
 	}
 }
