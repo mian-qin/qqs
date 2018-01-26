@@ -137,6 +137,55 @@ func (s *server) Allow(namespace, name string, tokensRequested int64, maxWaitMil
 	return w, b.Dynamic(), nil
 }
 
+func (s *server) Update(namespace, name string, size, fr, wt int64) error {
+	if len(namespace) == 0 || len(name) == 0 {
+		return fmt.Errorf("empty namespace or name:%s/%s", namespace, name)
+	}
+
+	var current pb.BucketConfig
+	if ns, ok := s.Configs().Namespaces[namespace]; ok {
+		if b, ok := ns.GetBuckets()[name]; ok && b != nil {
+			current = *b
+		}
+	}
+
+	b := config.NewDefaultBucketConfig(name)
+	if size > 0 {
+		b.Size = size
+	} else {
+		b.Size = current.GetSize()
+	}
+
+	if fr > 0 {
+		b.FillRate = fr
+	} else {
+		b.FillRate = current.GetFillRate()
+	}
+
+	if wt > 0 {
+		b.WaitTimeoutMillis = wt
+	} else {
+		b.WaitTimeoutMillis = current.GetWaitTimeoutMillis()
+	}
+
+	return s.UpdateBucket(namespace, b, "default_user")
+}
+
+func (s *server) GetInfo(namespace, name string) (size, fillRate, WaitTimeoutMillis int64, err error) {
+	var current *pb.BucketConfig
+	if ns, ok := s.Configs().Namespaces[namespace]; ok {
+		if b, ok := ns.GetBuckets()[name]; ok && b != nil {
+			current = b
+		}
+	}
+
+	if current == nil {
+		return 0, 0, 0, newError(fmt.Sprintf("%s/%s does not exist", namespace, name), ER_NO_BUCKET)
+	}
+
+	return current.GetSize(), current.GetFillRate(), current.GetWaitTimeoutMillis(), nil
+}
+
 func (s *server) ServeAdminConsole(mux *http.ServeMux, assetsDir string, development bool) {
 	admin.ServeAdminConsole(s, mux, assetsDir, development)
 }

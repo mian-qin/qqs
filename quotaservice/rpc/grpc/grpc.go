@@ -95,8 +95,66 @@ func (g *GrpcEndpoint) Allow(ctx context.Context, req *pb.AllowRequest) (*pb.All
 	return rsp, nil
 }
 
+// Update is the endpoint for updating a quota service bucket config
+func (g *GrpcEndpoint) Update(ctx context.Context, req *pb.UpdateRequest) (*pb.UpdateResponse, error) {
+	rsp := &pb.UpdateResponse{}
+	if !validUpdateReq(req) {
+		logging.Printf("Invalid request %+v", req)
+		rsp.Status = pb.UpdateResponse_REJECTED_INVALID_REQUEST
+		return rsp, nil
+	}
+
+	err := g.qs.Update(req.Namespace, req.BucketName, req.Size, req.FillRate, req.WaitTimeoutMillis)
+	if err != nil {
+		if qsErr, ok := err.(quotaservice.QuotaServiceError); ok {
+			rsp.Status = toPBStatusUpdate(qsErr)
+		} else {
+			logging.Printf("Internal error %v", err)
+			rsp.Status = pb.UpdateResponse_REJECTED_SERVER_ERROR
+		}
+	} else {
+		rsp.Status = pb.UpdateResponse_OK
+	}
+
+	return rsp, err
+}
+
+// GetInfo is the endpoint for getting information of a bucket
+func (g *GrpcEndpoint) GetInfo(ctx context.Context, req *pb.InfoRequest) (*pb.InfoResponse, error) {
+	rsp := &pb.InfoResponse{}
+
+	if !validInfoReq(req) {
+		logging.Printf("Invalid request %+v", req)
+		rsp.Status = pb.InfoResponse_REJECTED_INVALID_REQUEST
+		return rsp, nil
+	}
+
+	var err error
+	rsp.Size, rsp.FillRate, rsp.WaitTimeoutMillis, err = g.qs.GetInfo(req.Namespace, req.BucketName)
+	if err != nil {
+		if qsErr, ok := err.(quotaservice.QuotaServiceError); ok {
+			rsp.Status = toPBStatusInfo(qsErr)
+		} else {
+			logging.Printf("Internal error %v", err)
+			rsp.Status = pb.InfoResponse_REJECTED_SERVER_ERROR
+		}
+	} else {
+		rsp.Status = pb.InfoResponse_OK
+	}
+
+	return rsp, err
+}
+
 func invalid(req *pb.AllowRequest) bool {
-	return req.BucketName == "" || req.Namespace == ""
+	return req != nil && (req.BucketName == "" || req.Namespace == "")
+}
+
+func validUpdateReq(req *pb.UpdateRequest) bool {
+	return req != nil && req.BucketName != "" && req.Namespace != ""
+}
+
+func validInfoReq(req *pb.InfoRequest) bool {
+	return req != nil && req.BucketName != "" && req.Namespace != ""
 }
 
 func toPBStatus(qsErr quotaservice.QuotaServiceError) (r pb.AllowResponse_Status) {
@@ -111,6 +169,30 @@ func toPBStatus(qsErr quotaservice.QuotaServiceError) (r pb.AllowResponse_Status
 		r = pb.AllowResponse_REJECTED_TIMEOUT
 	default:
 		r = pb.AllowResponse_REJECTED_SERVER_ERROR
+	}
+
+	return
+}
+
+func toPBStatusUpdate(qsErr quotaservice.QuotaServiceError) (r pb.UpdateResponse_Status) {
+	switch qsErr.Reason {
+	case quotaservice.ER_TIMEOUT:
+		r = pb.UpdateResponse_REJECTED_TIMEOUT
+	default:
+		r = pb.UpdateResponse_REJECTED_SERVER_ERROR
+	}
+
+	return
+}
+
+func toPBStatusInfo(qsErr quotaservice.QuotaServiceError) (r pb.InfoResponse_Status) {
+	switch qsErr.Reason {
+	case quotaservice.ER_NO_BUCKET:
+		r = pb.InfoResponse_REJECTED_NO_BUCKET
+	case quotaservice.ER_TIMEOUT:
+		r = pb.InfoResponse_REJECTED_TIMEOUT
+	default:
+		r = pb.InfoResponse_REJECTED_SERVER_ERROR
 	}
 
 	return

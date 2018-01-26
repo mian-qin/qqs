@@ -9,10 +9,12 @@ import (
 	"time"
 
 	"github.com/square/quotaservice"
-	"github.com/square/quotaservice/buckets/memory"
+	"github.com/square/quotaservice/buckets/redis"
 	"github.com/square/quotaservice/config"
 	qqs "github.com/square/quotaservice/experiment/qqs/util"
+	pb "github.com/square/quotaservice/protos/config"
 	qsgrpc "github.com/square/quotaservice/rpc/grpc"
+	redisclient "gopkg.in/redis.v5"
 
 	flags "github.com/jessevdk/go-flags"
 )
@@ -25,7 +27,13 @@ type Options struct {
 	Projects        int    `short:"p" long:"projects" description:"number of projects for testing" default:"1"`
 }
 
-func setUpServer(addr string, cap int64, fr int64, rs int64, p int) quotaservice.Server {
+type QQServer struct {
+	cfg        *pb.ServiceConfig
+	nscProject *pb.NamespaceConfig
+	Srv        quotaservice.Server
+}
+
+func (qs *QQServer) Init(addr string, cap int64, fr int64, rs int64, p int) {
 	cfg := config.NewDefaultServiceConfig()
 	cfg.GlobalDefaultBucket = config.NewDefaultBucketConfig(config.DefaultBucketName)
 
@@ -41,17 +49,19 @@ func setUpServer(addr string, cap int64, fr int64, rs int64, p int) quotaservice
 	}
 
 	config.AddNamespace(cfg, nsc)
-
 	r := config.NewReaperConfig()
-	r.MinFrequency = 60 * 1000 * time.Millisecond
-	r.InitSleep = 60 * 1000 * time.Millisecond
-	server := quotaservice.New(memory.NewBucketFactory(),
+	r.MinFrequency = 10 * 60 * 1000 * time.Millisecond
+	r.InitSleep = 10 * 60 * 1000 * time.Millisecond
+	server := quotaservice.New(redis.NewBucketFactory(&redisclient.Options{Addr: "localhost:6379"}, 2, "qqs"),
 		config.NewMemoryConfig(cfg),
 		r,
 		0,
 		qsgrpc.New(addr))
 
-	return server
+	// Set buffered chan size
+	server.SetListener(nil, p)
+
+	qs.Srv = server
 }
 
 func main() {
@@ -61,8 +71,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	server := setUpServer(o.ServerAddr, int64(o.Cap), int64(o.FillRate), int64(o.RejectThreshold), o.Projects)
-	if _, err := server.Start(); err != nil {
+	qs := &QQServer{}
+	qs.Init(o.ServerAddr, int64(o.Cap), int64(o.FillRate), int64(o.RejectThreshold), o.Projects)
+
+	if _, err := qs.Srv.Start(); err != nil {
 		qqs.LogError(err)
 	}
 
@@ -78,6 +90,6 @@ func main() {
 	}()
 
 	<-ctx.Done()
-	server.Stop()
+	qs.Srv.Stop()
 	qqs.Log("Server closed")
 }

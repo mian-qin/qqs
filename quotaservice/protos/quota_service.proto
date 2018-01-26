@@ -21,6 +21,10 @@ package quotaservice;
 service QuotaService {
   rpc Allow (AllowRequest) returns (AllowResponse) {
   }
+  rpc Update (UpdateRequest) returns (UpdateResponse) {
+  }
+  rpc GetInfo (InfoRequest) returns (InfoResponse) {
+  }
 }
 
 message AllowRequest {
@@ -44,7 +48,7 @@ message AllowRequest {
 message AllowResponse {
   enum Status {
     OK = 0;                                 // Tokens granted
-    REJECTED_TIMEOUT = 1;                   // Tokens not  available within max wait time
+    REJECTED_TIMEOUT = 1;                   // Tokens not available within max wait time
     REJECTED_NO_BUCKET = 2;                 // No valid bucket
     REJECTED_TOO_MANY_BUCKETS = 3;          // Dynamic bucket couldn't be created
     REJECTED_TOO_MANY_TOKENS_REQUESTED = 4;
@@ -62,4 +66,43 @@ message AllowResponse {
    * Wait for this many millis before proceeding, if status == OK. 0 if no waiting is required.
    */
   int64 wait_millis = 3;
+}
+
+message UpdateRequest {
+  string namespace = 1;
+  string bucket_name = 2;
+  int64 size = 3;
+  int64 fill_rate = 4;
+  int64 wait_timeout_millis = 5;
+}
+
+message UpdateResponse {
+  enum Status {
+    OK = 0;
+    REJECTED_TIMEOUT = 1;
+    REJECTED_INVALID_REQUEST = 2;
+    REJECTED_SERVER_ERROR = 3;
+  }
+
+  Status status = 1;
+}
+
+message InfoRequest {
+  string namespace = 1;
+  string bucket_name = 2;
+}
+
+message InfoResponse {
+  enum Status {
+    OK = 0;                                 // Bucket information retrieved
+    REJECTED_TIMEOUT = 1;                   // Information not available within max wait time
+    REJECTED_NO_BUCKET = 2;                 // No valid bucket
+    REJECTED_INVALID_REQUEST = 3;
+    REJECTED_SERVER_ERROR = 4;
+  }
+
+  Status status = 1;
+  int64 size = 2;
+  int64 fill_rate = 3;
+  int64 wait_timeout_millis = 4;
 }
