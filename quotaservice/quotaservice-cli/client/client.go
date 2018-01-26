@@ -13,7 +13,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/square/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/config"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 

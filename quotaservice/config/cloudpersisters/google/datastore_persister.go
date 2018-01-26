@@ -28,8 +28,8 @@ import (
 	"time"
 
 	"cloud.google.com/go/datastore"
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 	"golang.org/x/net/context"
 	"google.golang.org/api/option"
 )

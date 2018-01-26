@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	qsclient "github.com/square/quotaservice/client"
-	pb "github.com/square/quotaservice/protos"
+	qsclient "github.com/mian-qin/qqs/quotaservice/client"
+	pb "github.com/mian-qin/qqs/quotaservice/protos"
 	"google.golang.org/grpc"
 )
 

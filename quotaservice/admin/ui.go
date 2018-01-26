@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 )
 
 // uiHandler is an http.Handler for the web UI.

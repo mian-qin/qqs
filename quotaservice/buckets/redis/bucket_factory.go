@@ -11,12 +11,12 @@ import (
 
 	"gopkg.in/redis.v5"
 
-	"github.com/square/quotaservice"
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 
 	"sync"
 
-	pbconfig "github.com/square/quotaservice/protos/config"
+	pbconfig "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 // Suffixes for Redis keys

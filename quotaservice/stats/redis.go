@@ -9,8 +9,8 @@ import (
 
 	"gopkg.in/redis.v5"
 
-	"github.com/square/quotaservice/events"
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 )
 
 type redisListener struct {

@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/square/quotaservice/config"
-	pb "github.com/square/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 type bucketsAPIHandler struct {

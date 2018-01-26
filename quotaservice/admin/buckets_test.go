@@ -9,8 +9,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/square/quotaservice/config"
-	pb "github.com/square/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 func TestBucketsGetNamespaceNotFound(t *testing.T) {

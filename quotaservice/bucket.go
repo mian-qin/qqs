@@ -11,11 +11,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/events"
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 
-	pbconfig "github.com/square/quotaservice/protos/config"
+	pbconfig "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 // bucketContainer is a holder for configurations and bucket factories.

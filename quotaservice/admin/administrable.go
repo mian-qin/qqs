@@ -4,8 +4,8 @@
 package admin
 
 import (
-	pb "github.com/square/quotaservice/protos/config"
-	"github.com/square/quotaservice/stats"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/stats"
 )
 
 // Administrable defines something that can be administered via this package.

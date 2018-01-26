@@ -6,7 +6,7 @@ package admin
 import (
 	"net/http"
 
-	pb "github.com/square/quotaservice/protos/config"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 type configsAPIHandler struct {

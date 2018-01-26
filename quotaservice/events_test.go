@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/events"
-	"github.com/square/quotaservice/test/helpers"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/test/helpers"
 )
 
 var s Server

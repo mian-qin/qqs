@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/samuel/go-zookeeper/zk"
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 )
 
 const (

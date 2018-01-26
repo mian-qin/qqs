@@ -9,8 +9,8 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/square/quotaservice/experiment/qqs"
-	"github.com/square/quotaservice/experiment/qqs/util"
+	"github.com/mian-qin/qqs/quotaservice/experiment"
+	"github.com/mian-qin/qqs/quotaservice/experiment/util"
 
 	flags "github.com/jessevdk/go-flags"
 )

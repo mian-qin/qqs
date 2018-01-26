@@ -12,8 +12,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/test/helpers"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/test/helpers"
 )
 
 func TestNamespacesPostWithVersion(t *testing.T) {

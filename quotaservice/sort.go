@@ -4,7 +4,7 @@
 package quotaservice
 
 import (
-	pb "github.com/square/quotaservice/protos/config"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 // Implements an interface for sorting server configs

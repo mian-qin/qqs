@@ -7,8 +7,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/square/quotaservice/buckets"
-	"github.com/square/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/buckets"
+	"github.com/mian-qin/qqs/quotaservice/config"
 )
 
 var factory = NewBucketFactory()

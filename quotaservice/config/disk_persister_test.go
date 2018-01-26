@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"testing"
 
-	pbconfig "github.com/square/quotaservice/protos/config"
-	"github.com/square/quotaservice/test/helpers"
+	pbconfig "github.com/mian-qin/qqs/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/test/helpers"
 )
 
 func TestDiskPersistence(t *testing.T) {

@@ -5,11 +5,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/square/quotaservice"
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/events"
-	"github.com/square/quotaservice/logging"
-	"github.com/square/quotaservice/test/helpers"
+	"github.com/mian-qin/qqs/quotaservice"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/test/helpers"
 )
 
 func TestTokenAcquisition(t *testing.T, bucket quotaservice.Bucket) {

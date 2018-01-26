@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/square/quotaservice/config"
-	pbc "github.com/square/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	pbc "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 func TestNotReapable(t *testing.T) {

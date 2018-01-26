@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 )
 
 const (

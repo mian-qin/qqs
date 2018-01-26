@@ -11,11 +11,11 @@ package memory
 import (
 	"time"
 
-	"github.com/square/quotaservice"
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 
-	pbconfig "github.com/square/quotaservice/protos/config"
+	pbconfig "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 type bucketFactory struct {

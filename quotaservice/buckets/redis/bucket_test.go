@@ -11,9 +11,9 @@ import (
 
 	"fmt"
 
-	"github.com/square/quotaservice/buckets"
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/buckets"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 const (

@@ -6,10 +6,10 @@ package quotaservice
 import (
 	"net/http"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/events"
-	"github.com/square/quotaservice/logging"
-	"github.com/square/quotaservice/stats"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/stats"
 )
 
 // The Server interface is what you get when you create a new quotaservice.

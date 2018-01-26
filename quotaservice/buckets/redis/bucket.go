@@ -11,10 +11,10 @@ import (
 
 	"gopkg.in/redis.v5"
 
-	"github.com/square/quotaservice"
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 
-	pbconfig "github.com/square/quotaservice/protos/config"
+	pbconfig "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 // redisBucket is an interface that defines the two different bucket types used with Redis: static and dynamic buckets.

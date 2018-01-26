@@ -6,7 +6,7 @@ package config
 import (
 	"testing"
 
-	pb "github.com/square/quotaservice/protos/config"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 func defaultConfig() *pb.ServiceConfig {

@@ -9,8 +9,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/stats"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/stats"
 )
 
 func TestStatsErrors(t *testing.T) {

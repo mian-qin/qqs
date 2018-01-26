@@ -6,9 +6,9 @@ package admin
 import (
 	"errors"
 
-	"github.com/square/quotaservice/config"
-	pb "github.com/square/quotaservice/protos/config"
-	"github.com/square/quotaservice/stats"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/stats"
 )
 
 type MockAdministrable struct {

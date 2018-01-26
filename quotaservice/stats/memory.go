@@ -6,7 +6,7 @@ package stats
 import (
 	"sort"
 
-	"github.com/square/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/events"
 )
 
 type namespaceStats struct {

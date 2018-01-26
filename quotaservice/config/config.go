@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
-	pb "github.com/square/quotaservice/protos/config"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
 	"gopkg.in/yaml.v2"
 )
 

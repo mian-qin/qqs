@@ -4,8 +4,8 @@
 package http
 
 import (
-	"github.com/square/quotaservice"
-	"github.com/square/quotaservice/lifecycle"
+	"github.com/mian-qin/qqs/quotaservice"
+	"github.com/mian-qin/qqs/quotaservice/lifecycle"
 )
 
 const defaultPort = 80

@@ -9,9 +9,9 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/config/cloudpersisters/google"
-	"github.com/square/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/config/cloudpersisters/google"
+	"github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 // Change these constants to match your settings on Google Cloud. Visit https://console.cloud.google.com/datastore

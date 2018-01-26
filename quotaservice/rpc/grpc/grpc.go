@@ -10,10 +10,10 @@ import (
 
 	"time"
 
-	"github.com/square/quotaservice"
-	"github.com/square/quotaservice/lifecycle"
-	"github.com/square/quotaservice/logging"
-	pb "github.com/square/quotaservice/protos"
+	"github.com/mian-qin/qqs/quotaservice"
+	"github.com/mian-qin/qqs/quotaservice/lifecycle"
+	"github.com/mian-qin/qqs/quotaservice/logging"
+	pb "github.com/mian-qin/qqs/quotaservice/protos"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"

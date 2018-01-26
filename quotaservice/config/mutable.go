@@ -6,7 +6,7 @@ package config
 import (
 	"errors"
 
-	pbconfig "github.com/square/quotaservice/protos/config"
+	pbconfig "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 func CreateBucket(clonedCfg *pbconfig.ServiceConfig, namespace string, b *pbconfig.BucketConfig) error {

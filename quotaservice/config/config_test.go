@@ -6,11 +6,11 @@ package config
 import (
 	"testing"
 
-	"github.com/square/quotaservice/test/helpers"
+	"github.com/mian-qin/qqs/quotaservice/test/helpers"
 
 	"strings"
 
-	pbconfig "github.com/square/quotaservice/protos/config"
+	pbconfig "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 const cfgYaml = `namespaces:

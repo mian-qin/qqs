@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/test/helpers"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/test/helpers"
 )
 
 func TestWithNoRpcs(t *testing.T) {

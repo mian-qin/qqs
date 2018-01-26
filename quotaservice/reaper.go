@@ -6,9 +6,9 @@ package quotaservice
 import (
 	"time"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/logging"
-	pbconfig "github.com/square/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/logging"
+	pbconfig "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 // watcher watches reapableBuckets for activity.

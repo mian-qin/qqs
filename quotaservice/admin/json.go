@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 )
 
 var emptyJSONResponse []byte

@@ -6,7 +6,7 @@ package stats
 import (
 	"fmt"
 
-	"github.com/square/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/events"
 )
 
 // Listener is an interface for consuming

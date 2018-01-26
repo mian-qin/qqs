@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/square/quotaservice/events"
-	"github.com/square/quotaservice/stats"
+	"github.com/mian-qin/qqs/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/stats"
 )
 
 var listener stats.Listener

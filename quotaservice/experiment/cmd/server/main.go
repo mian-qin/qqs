@@ -8,12 +8,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/square/quotaservice"
-	"github.com/square/quotaservice/buckets/redis"
-	"github.com/square/quotaservice/config"
-	qqs "github.com/square/quotaservice/experiment/qqs/util"
-	pb "github.com/square/quotaservice/protos/config"
-	qsgrpc "github.com/square/quotaservice/rpc/grpc"
+	"github.com/mian-qin/qqs/quotaservice"
+	"github.com/mian-qin/qqs/quotaservice/buckets/redis"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	qqs "github.com/mian-qin/qqs/quotaservice/experiment/util"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
+	qsgrpc "github.com/mian-qin/qqs/quotaservice/rpc/grpc"
 	redisclient "gopkg.in/redis.v5"
 
 	flags "github.com/jessevdk/go-flags"

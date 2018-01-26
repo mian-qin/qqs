@@ -10,17 +10,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/square/quotaservice/admin"
-	"github.com/square/quotaservice/events"
-	"github.com/square/quotaservice/lifecycle"
-	"github.com/square/quotaservice/logging"
-	"github.com/square/quotaservice/stats"
+	"github.com/mian-qin/qqs/quotaservice/admin"
+	"github.com/mian-qin/qqs/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/lifecycle"
+	"github.com/mian-qin/qqs/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/stats"
 
 	"math/rand"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/square/quotaservice/config"
-	pb "github.com/square/quotaservice/protos/config"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	pb "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 // Implements the quotaservice.Server interface

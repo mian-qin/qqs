@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/square/quotaservice/stats"
+	"github.com/mian-qin/qqs/quotaservice/stats"
 )
 
 type statsAPIHandler struct {

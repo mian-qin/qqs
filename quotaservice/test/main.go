@@ -10,13 +10,13 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/square/quotaservice"
-	"github.com/square/quotaservice/buckets/memory"
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/logging"
-	"github.com/square/quotaservice/rpc/grpc"
-	"github.com/square/quotaservice/stats"
-	"github.com/square/quotaservice/test/helpers"
+	"github.com/mian-qin/qqs/quotaservice"
+	"github.com/mian-qin/qqs/quotaservice/buckets/memory"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/rpc/grpc"
+	"github.com/mian-qin/qqs/quotaservice/stats"
+	"github.com/mian-qin/qqs/quotaservice/test/helpers"
 )
 
 const (

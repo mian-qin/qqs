@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/samuel/go-zookeeper/zk"
-	"github.com/square/quotaservice/test/helpers"
+	"github.com/mian-qin/qqs/quotaservice/test/helpers"
 )
 
 var servers []string

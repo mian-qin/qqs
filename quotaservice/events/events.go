@@ -8,7 +8,7 @@ import (
 
 	"fmt"
 
-	"github.com/square/quotaservice/logging"
+	"github.com/mian-qin/qqs/quotaservice/logging"
 )
 
 type EventType int

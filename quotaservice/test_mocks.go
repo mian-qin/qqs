@@ -8,10 +8,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/square/quotaservice/config"
-	"github.com/square/quotaservice/events"
+	"github.com/mian-qin/qqs/quotaservice/config"
+	"github.com/mian-qin/qqs/quotaservice/events"
 
-	pbconfig "github.com/square/quotaservice/protos/config"
+	pbconfig "github.com/mian-qin/qqs/quotaservice/protos/config"
 )
 
 type MockBucket struct {
