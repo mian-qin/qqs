@@ -4,6 +4,7 @@
 package grpc
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"strings"
@@ -14,7 +15,6 @@ import (
 	"github.com/mian-qin/qqs/quotaservice/lifecycle"
 	"github.com/mian-qin/qqs/quotaservice/logging"
 	pb "github.com/mian-qin/qqs/quotaservice/protos"
-	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 )

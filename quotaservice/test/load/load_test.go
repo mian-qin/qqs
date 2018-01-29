@@ -4,11 +4,11 @@
 package loadtest
 
 import (
+	"context"
 	"fmt"
 	"testing"
 
 	pb "github.com/mian-qin/qqs/quotaservice/protos"
-	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 )
