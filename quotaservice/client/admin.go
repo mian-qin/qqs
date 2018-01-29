@@ -1,8 +1,9 @@
 package client
 
 import (
+	"context"
+
 	"github.com/mian-qin/qqs/quotaservice/protos"
-	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
 

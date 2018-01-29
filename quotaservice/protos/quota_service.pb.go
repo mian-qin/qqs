@@ -17,12 +17,14 @@ It has these top-level messages:
 */
 package quotaservice
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-
 import (
-	context "golang.org/x/net/context"
+	"context"
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+
 	grpc "google.golang.org/grpc"
 )
 

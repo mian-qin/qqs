@@ -20,6 +20,7 @@ package google
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -30,7 +31,6 @@ import (
 	"cloud.google.com/go/datastore"
 	"github.com/mian-qin/qqs/quotaservice/config"
 	"github.com/mian-qin/qqs/quotaservice/logging"
-	"golang.org/x/net/context"
 	"google.golang.org/api/option"
 )
 
